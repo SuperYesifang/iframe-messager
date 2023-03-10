@@ -77,6 +77,11 @@ let iframeMessager = new IframeMessager({
 
 ### new IframeMessager()
 `new IframeMessager(options):IframeMessager`
+Instantiate an iframe messager.
+
+### messager.addIframe()
+`message.adIframe(iframe:IframeElement|IframeElement[]):void`
+Add iframe(s) to parent's event subscription.
 
 ### messager.on()
 `messager.on(type:string, callback:Function):void`

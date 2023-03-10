@@ -77,6 +77,11 @@ let iframeMessager = new IframeMessager({
 
 ### new IframeMessager()
 `new IframeMessager(options):IframeMessager`
+实例化一个iframe消息传送器。
+
+### messager.addIframe()
+`message.adIframe(iframe:IframeElement|IframeElement[]):void`
+将iframe(s)添加入事件订阅。
 
 ### messager.on()
 `messager.on(type:string, callback:Function):void`

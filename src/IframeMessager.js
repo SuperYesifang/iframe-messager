@@ -3,10 +3,7 @@ class IframeMessager {
 	constructor({ role, iframe }) {
 		this.role = role;
 		if (role === "parent") {
-			if (IframeMessager.isIframe(iframe)) this.iframe = [iframe];
-			if (iframe instanceof Array) {
-				this.iframe = iframe.filter(IframeMessager.isIframe);
-			}
+			this.addIframe(iframe);
 		}
 	}
 	static isIframe(el) {
@@ -17,6 +14,18 @@ class IframeMessager {
 	}
 	_createProcessMessageHandler(type, cb) {
 		return ({ data }) => (data.type === type) && cb(data.payload);
+	}
+	addIframe(iframe) {
+		let iframes;
+		if (IframeMessager.isIframe(iframe)) iframes = [iframe];
+		if (iframes && (iframe instanceof Array)) {
+			iframes = iframe.filter(IframeMessager.isIframe);
+			if (this.iframe && (this.iframe instanceof Array)) {
+				this.iframe.push(...iframes);
+			}  else {
+				this.iframe = iframes;
+			}
+		}
 	}
 	on(type, cb) {
 		if (type && cb) {
