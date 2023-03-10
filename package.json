@@ -1,6 +1,6 @@
 {
   "name": "iframe-messager",
-  "version": "0.1.2",
+  "version": "0.1.3",
   "description": "This is mitt's extensions package.",
   "main": "./src/index.js",
   "scripts": {

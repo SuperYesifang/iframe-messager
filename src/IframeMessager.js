@@ -18,8 +18,8 @@ class IframeMessager {
 	addIframe(iframe) {
 		let iframes;
 		if (IframeMessager.isIframe(iframe)) iframes = [iframe];
-		if (iframes && (iframe instanceof Array)) {
-			iframes = iframe.filter(IframeMessager.isIframe);
+		if (iframes && (iframes instanceof Array)) {
+			iframes = iframes.filter(IframeMessager.isIframe);
 			if (this.iframe && (this.iframe instanceof Array)) {
 				this.iframe.push(...iframes);
 			}  else {
