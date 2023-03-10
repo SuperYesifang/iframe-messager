@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Document</title>
+	<style>
+		#content {
+			font-size: 20px;
+		}
+	</style>
+</head>
+<body>
+	<div id="content"></div>
+	<button onclick="sendToParent()">send Hello to parent</button>
+	<script src="./IframeMessager.cdn.js"></script>
+	<script>
+		let content = document.getElementById("content");
+		let iframeMessager = new IframeMessager({ role:"children" });
+		iframeMessager.on("say", payload => {
+			content.innerText = "Parent page say:" + payload;
+		});
+		function sendToParent() {
+			iframeMessager.emit("say", "Hello I'm your children.");
+		}
+	</script>
+</body>
+</html>
