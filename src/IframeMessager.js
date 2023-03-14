@@ -1,7 +1,9 @@
 class IframeMessager {
 	_packs = {};
-	constructor({ role, iframe }) {
+	constructor({ role, iframe, origin, topEmit }) {
 		this.role = role;
+		this.origin = origin ?? window.location.origin;
+		this.topEmit = topEmit ?? false;
 		if (role === "parent") {
 			this.addIframe(iframe);
 		}
@@ -10,7 +12,7 @@ class IframeMessager {
 		return el && el.tagName === "IFRAME";
 	}
 	_send(type, payload, iframe) {
-		iframe.contentWindow.postMessage({ type, payload });
+		iframe.contentWindow.postMessage({ type, payload }, this.origin);
 	}
 	_createProcessMessageHandler(type, cb) {
 		return ({ data }) => (data.type === type) && cb(data.payload);
@@ -62,7 +64,8 @@ class IframeMessager {
 				}
 			}
 		} else if (this.role === "children") {
-			window.parent.postMessage({ type, payload });
+			let target = this.topEmit ? "top" : "parent";
+			window[target].postMessage({ type, payload }, this.origin);
 		}
 	}
 }

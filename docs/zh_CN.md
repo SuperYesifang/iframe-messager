@@ -70,8 +70,10 @@ let iframeMessager = new IframeMessager({
 ### 选项
 | prop | type | description |
 | -- | -- | -- |
-| `role` | "parent" \| "children" | 当前页面的角色, 为"parent" 或者 "children". |
-| `iframe` | HTMLElement \| HTMLElement[] | 父页面的子ifram(s). |
+| `role` | "parent" \| "children" | 当前页面的角色, 为"parent" 或者 "children"。 |
+| `iframe` | HTMLElement \| HTMLElement[] | 父页面的子ifram(s)。 |
+| `origin` | String | 消息通信的源作用域(跨域相关)，默认为: `window.location.origin`。 |
+| `topEmit` | Boolean | 当`role="chidlren"`时，消息通信的对象时候是顶部窗口，默认为：`false`。 |
 
 ## API
 

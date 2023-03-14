@@ -72,6 +72,8 @@ let iframeMessager = new IframeMessager({
 | -- | -- | -- |
 | `role` | "parent" \| "children" | current page's role, "parent" or "children". |
 | `iframe` | HTMLElement \| HTMLElement[] | parent's child iframe(s). |
+| `origin` | String | message communication origin scope(Cross-Origin correlation). default: `window.location.origin` |
+| `topEmit` | Boolean | the object of meesage communication target is the top window. when `role="children"`. default: `false` |
 
 ## API
 
