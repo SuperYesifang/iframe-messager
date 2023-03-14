@@ -94,5 +94,5 @@ let iframeMessager = new IframeMessager({
 注销所有事件监听器
 
 ### messager.emit()
-`messager.emit(type:string, payload:any):void`
+`messager.emit(type:string, payload:any, payload2:any, ...):void`
 向父页面或子iframe发射一个事件。

@@ -12,11 +12,11 @@ class IframeMessager {
 	static isIframe(el) {
 		return el && el.tagName === "IFRAME";
 	}
-	_send(type, payload, iframe) {
-		iframe.contentWindow.postMessage({ type, payload }, this.origin);
+	_send(type, args, iframe) {
+		iframe.contentWindow.postMessage({ type, args }, this.origin);
 	}
 	_createProcessMessageHandler(type, cb) {
-		return ({ data }) => (data.type === type) && cb(data.payload);
+		return ({ data }) => (data.type === type) && cb(...data.args);
 	}
 	addIframe(iframe) {
 		let iframes;
@@ -53,23 +53,26 @@ class IframeMessager {
 			this._packs[type].forEach(pack => pack.removeHandler());
 		}
 	}
-	emit(type, payload, iframe) {
-		if (this.role === "parent") {
-			let iframes = iframe ?? this.iframe;
-			if (iframes) {
-				if (IframeMessager.isIframe(iframes)) iframes = [iframes];
-				if (iframes instanceof Array) {
-					iframes.forEach(iframe => {
-						if (IframeMessager.isIframe(iframe)) {
-							this._send(type, payload, iframe);
-						}
-					});
+	emit() {
+		if (arguments.length) {
+			let args = [...arguments];
+			let type = args.shift();
+			if (this.role === "parent") {
+				if (this.iframe) {
+					if (this.iframe instanceof Array) {
+						this.iframe.forEach(iframe => {
+							if (IframeMessager.isIframe(iframe)) {
+								this._send(type, args, iframe);
+							}
+						});
+					}
 				}
+			} else if (this.role === "children") {
+				let target = this.topEmit ? "top" : "parent";
+				window[target].postMessage({ type, args }, this.origin);
 			}
-		} else if (this.role === "children") {
-			let target = this.topEmit ? "top" : "parent";
-			window[target].postMessage({ type, payload }, this.origin);
 		}
+
 	}
 }
 

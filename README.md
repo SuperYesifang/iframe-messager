@@ -94,5 +94,5 @@ Register an event listener that is triggered when a child iframe emits an event.
 Unregister all event listener.
 
 ### messager.emit()
-`messager.emit(type:string, payload:any):void`
+`messager.emit(type:string, payload:any, payload2:any, ...):void`
 Emit a event to parent page or child iframe.
