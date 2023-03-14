@@ -1,5 +1,6 @@
 class IframeMessager {
 	_packs = {};
+	iframe = [];
 	constructor({ role, iframe, origin, topEmit }) {
 		this.role = role;
 		this.origin = origin ?? window.location.origin;
@@ -21,11 +22,13 @@ class IframeMessager {
 		let iframes;
 		if (IframeMessager.isIframe(iframe)) iframes = [iframe];
 		if (iframes && (iframes instanceof Array)) {
-			iframes = iframes.filter(ifr => IframeMessager.isIframe(ifr) && this.iframe.indexOf(ifr) === -1);
-			if (this.iframe && (this.iframe instanceof Array)) {
-				this.iframe.push(...iframes);
-			}  else {
-				this.iframe = iframes;
+			for (let i = 0; i < iframes.length; i++) {
+				let ifr = iframes[i];
+				if (IframeMessager.isIframe(ifr)) {
+					if (this.iframe && this.iframe.indexOf(ifr) === -1) {
+						this.iframe.push(ifr);
+					}
+				}
 			}
 		}
 	}
