@@ -21,7 +21,7 @@ class IframeMessager {
 		let iframes;
 		if (IframeMessager.isIframe(iframe)) iframes = [iframe];
 		if (iframes && (iframes instanceof Array)) {
-			iframes = iframes.filter(IframeMessager.isIframe);
+			iframes = iframes.filter(ifr => IframeMessager.isIframe(ifr) && this.iframe.indexOf(ifr) === -1);
 			if (this.iframe && (this.iframe instanceof Array)) {
 				this.iframe.push(...iframes);
 			}  else {
