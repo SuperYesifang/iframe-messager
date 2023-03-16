@@ -60,16 +60,23 @@ class IframeMessager {
 			if (this.role === "parent") {
 				if (this.iframe) {
 					if (this.iframe instanceof Array) {
-						this.iframe.forEach(iframe => {
+						this.iframe.forEach((iframe, index) => {
 							if (IframeMessager.isIframe(iframe)) {
-								this._send(type, args, iframe);
+								if (iframe.contentWindow && iframe.contentWindow.postMessage) {
+									this._send(type, args, iframe);
+								} else {
+									this.iframe.splice(index, 1);
+								}
 							}
 						});
 					}
 				}
 			} else if (this.role === "children") {
 				let target = this.topEmit ? "top" : "parent";
-				window[target].postMessage({ type, args }, this.origin);
+				let contentWindow = window[target];
+				if (contentWindow) {
+					contentWindow.postMessage({ type, args }, this.origin);
+				}
 			}
 		}
 
